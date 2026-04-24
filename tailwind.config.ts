@@ -31,6 +31,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
       },
       fontSize: {
         '7xl': ['5rem', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
@@ -39,6 +40,9 @@ const config: Config = {
       animation: {
         marquee: 'marquee 28s linear infinite',
         'marquee-reverse': 'marquee-reverse 28s linear infinite',
+        float: 'float 6s ease-in-out infinite',
+        'float-slow': 'float-slow 8s ease-in-out infinite',
+        'float-slower': 'float-slower 10s ease-in-out infinite',
       },
       keyframes: {
         marquee: {
@@ -48,6 +52,18 @@ const config: Config = {
         'marquee-reverse': {
           '0%': { transform: 'translateX(-50%)' },
           '100%': { transform: 'translateX(0)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        'float-slow': {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-15px)' },
+        },
+        'float-slower': {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
       },
     },
