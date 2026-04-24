@@ -56,25 +56,16 @@ export default function Navbar() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                  <path d="M18 2C18 2 8 8 8 18C8 28 18 34 18 34" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 4C18 4 10 9 10 18C10 27 18 32 18 32" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 6C18 6 12 10 12 18C12 26 18 30 18 30" stroke="#eab308" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 8C18 8 14 11 14 18C14 25 18 28 18 28" stroke="#A8D52E" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 10C18 10 16 12 16 18C16 24 18 26 18 26" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 2C18 2 28 8 28 18C28 28 18 34 18 34" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 4C18 4 26 9 26 18C26 27 18 32 18 32" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 6C18 6 24 10 24 18C24 26 18 30 18 30" stroke="#eab308" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 8C18 8 22 11 22 18C22 25 18 28 18 28" stroke="#A8D52E" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M18 10C18 10 20 12 20 18C20 24 18 26 18 26" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" />
-                </svg>
+               <div className="img">
+                <img src="/src/assets/logoyayasan.png" alt="Logo YPM Putih" width={30} height={30} style={{paddingBottom: "5px"}}/>
+               </div>
               </motion.div>
               <motion.span
                 className="font-semibold text-lg tracking-tight"
                 animate={{ color: isScrolled ? '#111111' : '#ffffff' }}
                 transition={{ duration: 0.4 }}
               >
-                Higher Life
+                Yayasan Pendidikan Metland
               </motion.span>
             </Link>
 
