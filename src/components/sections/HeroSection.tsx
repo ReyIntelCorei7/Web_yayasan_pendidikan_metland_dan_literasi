@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import WordReveal from '../animations/WordReveal';
 
-const heroImages = [
-  'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600&q=80',
-  'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1600&q=80',
-  'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=1600&q=80',
-];
+import hero1 from '../../assets/sekolahsmkmetland.png';
+import hero2 from '../../assets/sekolahsmkmetlandcibitung.jpg';
+import hero3 from '../../assets/kepalasekolahsmkmetland.jpeg';
+
+const heroImages = [hero1, hero2, hero3];
 
 export default function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
