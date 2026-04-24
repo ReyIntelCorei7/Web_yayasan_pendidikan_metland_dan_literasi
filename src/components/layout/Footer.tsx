@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Globe, Mail, ExternalLink, Share2, MessageSquareShare } from 'lucide-react';
 
 const footerLinks = {
-  'Programs': [
-    { label: 'Education', href: '/programs?cat=education' },
-    { label: 'Health', href: '/programs?cat=health' },
-    { label: 'Livelihoods', href: '/programs?cat=livelihoods' },
-    { label: 'All Programs', href: '/programs' },
+  'Our School': [
+    { label: 'TK Tunas Metropolitan', href: '/our-school/tk-tunas-metropolitan' },
+    { label: 'SD Tunas Metropolitan', href: '/our-school/sd-tunas-metropolitan' },
+    { label: 'SMK Pariwisata Metland School', href: '/our-school/smk-pariwisata-metland-school' },
+    { label: 'SMK Metland', href: '/our-school/smk-metland' },
+    { label: 'Metland College', href: '/our-school/metland-college' },
   ],
-  'Organization': [
-    { label: 'About Us', href: '/about' },
-    { label: 'Our Impact', href: '/impact' },
-    { label: 'News & Stories', href: '/news' },
+  'Navigasi': [
+    { label: 'Home', href: '/' },
+    { label: 'Visi & Misi', href: '/profil/visi-misi' },
+    { label: 'Struktur Organisasi', href: '/profil/struktur-organisasi' },
+    { label: 'Artikel', href: '/artikel' },
+    { label: 'Literasi', href: '/literasi' },
     { label: 'Contact', href: '/contact' },
   ],
 };
@@ -56,7 +58,7 @@ export default function Footer() {
               <span className="font-semibold text-lg text-white">Higher Life</span>
             </Link>
             <p className="text-gray-500 text-sm mt-4 leading-relaxed max-w-[200px]">
-              Building Africa's future through education, health, and sustainable livelihoods.
+              Yayasan Pendidikan Metland — membangun generasi unggul melalui pendidikan berkualitas.
             </p>
           </div>
 
@@ -81,18 +83,18 @@ export default function Footer() {
 
           {/* Column 4: Newsletter */}
           <div>
-            <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-4">Stay Updated</h4>
+            <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-4">Tetap Terhubung</h4>
             <form onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
-                placeholder="Your email address"
+                placeholder="Alamat email Anda"
                 className="w-full bg-white/5 border border-white/10 rounded text-white placeholder-gray-600 px-4 py-3 text-sm focus:border-lime/50 focus:outline-none transition-colors"
               />
               <button
                 type="submit"
                 className="bg-lime text-charcoal w-full mt-2 py-3 rounded text-sm font-medium hover:bg-lime-hover transition-colors"
               >
-                Subscribe
+                Berlangganan
               </button>
             </form>
 
@@ -116,10 +118,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-600">© {new Date().getFullYear()} Higher Life Foundation. All rights reserved.</p>
+          <p className="text-xs text-gray-600">© {new Date().getFullYear()} Yayasan Pendidikan Metland. Hak cipta dilindungi.</p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Terms of Use</a>
+            <a href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Kebijakan Privasi</a>
+            <a href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Syarat & Ketentuan</a>
             <a href="#" className="text-xs text-gray-600 hover:text-gray-400 transition-colors">Cookie Policy</a>
           </div>
         </div>

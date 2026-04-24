@@ -47,7 +47,7 @@ export default function CTABanner() {
               whileHover={{ scale: 1.04, backgroundColor: '#94BC28' }}
               whileTap={{ scale: 0.97 }}
             >
-              Get Involved <span>→</span>
+              Hubungi Kami <span>→</span>
             </motion.span>
           </Link>
           <a href="#">

@@ -1,37 +1,40 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { useNavScroll } from '../../hooks/useNavScroll';
 import type { NavItem } from '../../types';
 
 const navItems: NavItem[] = [
+  { label: 'Home', href: '/' },
   {
-    label: 'What We Do',
-    href: '/programs',
+    label: 'Profil',
+    href: '/profil',
     children: [
-      { label: 'Education', href: '/programs?cat=education', description: 'Scholarships & learning programs' },
-      { label: 'Health', href: '/programs?cat=health', description: 'Community health initiatives' },
-      { label: 'Livelihoods', href: '/programs?cat=livelihoods', description: 'Skills & enterprise development' },
+      { label: 'Visi & Misi', href: '/profil/visi-misi', description: 'Visi, misi, dan nilai-nilai yayasan' },
+      { label: 'Struktur Organisasi', href: '/profil/struktur-organisasi', description: 'Susunan pengurus dan pengelola' },
     ],
   },
-  { label: 'About Us', href: '/about' },
   {
-    label: 'Insight & Resources',
-    href: '/news',
+    label: 'Our School',
+    href: '/our-school',
     children: [
-      { label: 'News & Stories', href: '/news', description: 'Latest updates from the field' },
-      { label: 'Reports', href: '/news?cat=reports', description: 'Annual reports & publications' },
+      { label: 'TK Tunas Metropolitan', href: '/our-school/tk-tunas-metropolitan', description: 'Taman Kanak-Kanak Tunas Metropolitan' },
+      { label: 'SD Tunas Metropolitan', href: '/our-school/sd-tunas-metropolitan', description: 'Sekolah Dasar Tunas Metropolitan' },
+      { label: 'SMK Pariwisata Metland School', href: '/our-school/smk-pariwisata-metland-school', description: 'SMK Pariwisata Metland School' },
+      { label: 'SMK Metland', href: '/our-school/smk-metland', description: 'SMK Metland' },
+      { label: 'Metland College', href: '/our-school/metland-college', description: 'Perguruan Tinggi Metland College' },
     ],
   },
-  { label: 'Impact', href: '/impact' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Artikel', href: '/artikel' },
+  { label: 'Literasi', href: '/literasi' },
 ];
 
 export default function Navbar() {
   const { isScrolled } = useNavScroll();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const location = useLocation();
 
   return (
@@ -86,12 +89,21 @@ export default function Navbar() {
                 >
                   <Link to={item.href}>
                     <motion.span
-                      className="px-4 py-2 text-sm font-medium inline-block cursor-pointer"
+                      className="px-4 py-2 text-sm font-medium inline-flex items-center gap-1 cursor-pointer"
                       animate={{ color: isScrolled ? '#111111' : '#ffffff' }}
                       whileHover={{ opacity: 0.7 }}
                       transition={{ duration: 0.3 }}
                     >
                       {item.label}
+                      {item.children && (
+                        <motion.span
+                          animate={{ rotate: activeDropdown === item.label ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="inline-block"
+                        >
+                          <ChevronDown className="w-3.5 h-3.5" />
+                        </motion.span>
+                      )}
                     </motion.span>
                   </Link>
                   {/* Dropdown */}
@@ -102,7 +114,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -8, scale: 0.97 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-1 w-[280px] bg-white rounded-xl shadow-lg p-3 border border-gray-100"
+                        className="absolute top-full left-0 mt-1 w-[300px] bg-white rounded-xl shadow-lg p-3 border border-gray-100"
                       >
                         {item.children.map((child) => (
                           <Link
@@ -129,7 +141,7 @@ export default function Navbar() {
                 whileTap={{ scale: 0.97 }}
               >
                 <motion.span whileHover={{ x: 4 }} className="inline-block">→</motion.span>
-                Get Involved
+                Contact
               </motion.span>
             </Link>
 
@@ -171,7 +183,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 h-full w-80 bg-white z-50 shadow-2xl lg:hidden"
+              className="fixed top-0 right-0 h-full w-80 bg-white z-50 shadow-2xl lg:hidden overflow-y-auto"
             >
               <div className="pt-24 px-6 pb-8 flex flex-col h-full">
                 <motion.div
@@ -185,28 +197,57 @@ export default function Navbar() {
                       key={item.label}
                       variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
                     >
-                      <Link
-                        to={item.href}
-                        onClick={() => setIsMobileOpen(false)}
-                        className={`block py-3 text-lg font-medium border-b border-gray-100 ${
-                          location.pathname === item.href ? 'text-lime-dark' : 'text-charcoal'
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                      {item.children && (
-                        <div className="pl-4 pb-2">
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.label}
-                              to={child.href}
-                              onClick={() => setIsMobileOpen(false)}
-                              className="block py-2 text-sm text-gray-500 hover:text-charcoal"
+                      {item.children ? (
+                        <div>
+                          <button
+                            onClick={() => setMobileExpanded(mobileExpanded === item.label ? null : item.label)}
+                            className={`w-full flex items-center justify-between py-3 text-lg font-medium border-b border-gray-100 ${
+                              location.pathname.startsWith(item.href) ? 'text-lime-dark' : 'text-charcoal'
+                            }`}
+                          >
+                            {item.label}
+                            <motion.span
+                              animate={{ rotate: mobileExpanded === item.label ? 180 : 0 }}
+                              transition={{ duration: 0.2 }}
                             >
-                              {child.label}
-                            </Link>
-                          ))}
+                              <ChevronDown className="w-4 h-4" />
+                            </motion.span>
+                          </button>
+                          <AnimatePresence>
+                            {mobileExpanded === item.label && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.25 }}
+                                className="overflow-hidden"
+                              >
+                                <div className="pl-4 pb-2">
+                                  {item.children.map((child) => (
+                                    <Link
+                                      key={child.label}
+                                      to={child.href}
+                                      onClick={() => setIsMobileOpen(false)}
+                                      className="block py-2 text-sm text-gray-500 hover:text-charcoal"
+                                    >
+                                      {child.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
                         </div>
+                      ) : (
+                        <Link
+                          to={item.href}
+                          onClick={() => setIsMobileOpen(false)}
+                          className={`block py-3 text-lg font-medium border-b border-gray-100 ${
+                            location.pathname === item.href ? 'text-lime-dark' : 'text-charcoal'
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
                       )}
                     </motion.div>
                   ))}
@@ -216,7 +257,7 @@ export default function Navbar() {
                   onClick={() => setIsMobileOpen(false)}
                   className="block w-full bg-lime text-charcoal text-center py-4 rounded-md font-medium text-sm mt-6"
                 >
-                  → Get Involved
+                  → Contact
                 </Link>
               </div>
             </motion.div>
