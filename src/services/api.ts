@@ -32,6 +32,10 @@ export const api = {
   team: {
     list: () => fetchApi<any[]>('/team'),
   },
+  books: {
+    list: () => fetchApi<any[]>('/books'),
+    byId: (id: string) => fetchApi<any>(`/books/${id}`),
+  },
 };
 
 export default api;

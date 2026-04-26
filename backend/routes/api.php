@@ -15,4 +15,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/partners', [ApiController::class, 'partners']);
     Route::get('/impact-stats', [ApiController::class, 'impactStats']);
     Route::get('/team', [ApiController::class, 'team']);
+
+    Route::get('/books', [ApiController::class, 'books']);
+    Route::get('/books/{id}', [ApiController::class, 'bookById']);
 });
