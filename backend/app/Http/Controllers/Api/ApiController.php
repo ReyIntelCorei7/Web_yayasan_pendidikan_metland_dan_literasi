@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\ImpactStat;
 use App\Models\Partner;
 use App\Models\Post;
@@ -137,6 +138,41 @@ class ApiController extends Controller
         ]);
 
         return response()->json($team);
+    }
+
+    public function books(): JsonResponse
+    {
+        $books = Book::published()
+            ->orderBy('order')
+            ->get()
+            ->map(fn ($b) => [
+                'id' => (string) $b->id,
+                'title' => $b->title,
+                'author' => $b->author,
+                'description' => $b->description,
+                'category' => $b->category,
+                'coverImage' => $b->cover_image ? asset('storage/' . $b->cover_image) : null,
+                'pdfUrl' => asset('storage/' . $b->pdf_file),
+                'order' => $b->order,
+            ]);
+
+        return response()->json($books);
+    }
+
+    public function bookById(string $id): JsonResponse
+    {
+        $book = Book::published()->findOrFail($id);
+
+        return response()->json([
+            'id' => (string) $book->id,
+            'title' => $book->title,
+            'author' => $book->author,
+            'description' => $book->description,
+            'category' => $book->category,
+            'coverImage' => $book->cover_image ? asset('storage/' . $book->cover_image) : null,
+            'pdfUrl' => asset('storage/' . $book->pdf_file),
+            'order' => $book->order,
+        ]);
     }
 
     private function formatPost(Post $p): array

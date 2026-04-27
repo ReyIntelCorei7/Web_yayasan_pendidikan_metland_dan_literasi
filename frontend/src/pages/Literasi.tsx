@@ -1,8 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink, BookOpen } from 'lucide-react';
 import CountUpTrigger from '../components/animations/CountUpTrigger';
 import ScrollReveal from '../components/animations/ScrollReveal';
+import useBooks from '../hooks/useBooks';
+import type { Book } from '../hooks/useBooks';
+import FlipbookReader from '../components/sections/FlipbookReader';
 
 /* ─── Local Data ───────────────────────────────────────────────────── */
 
@@ -117,6 +120,9 @@ function StaggerWords({ text, className, delay = 0 }: { text: string; className?
 
 /* ─── Main Literasi Page ──────────────────────────────────────────── */
 
+const BOOK_COVER_PLACEHOLDER = 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400&q=80';
+const CATEGORIES = ['Semua', 'Pendidikan', 'Literasi', 'Sains', 'Fiksi', 'Agama', 'Umum'];
+
 export default function Literasi() {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -124,6 +130,9 @@ export default function Literasi() {
     offset: ['start start', 'end start'],
   });
   const booksY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+
+  const { books, loading, activeCategory, setActiveCategory, filteredBooks } = useBooks();
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   return (
     <>
@@ -443,7 +452,7 @@ export default function Literasi() {
                   dan guru.
                 </p>
                 <a
-                  href="#"
+                  href="#koleksi-buku"
                   className="group inline-flex items-center gap-3 bg-[#1C1C1C] text-white px-10 py-5 text-sm font-medium tracking-wide hover:bg-[#333] transition-colors duration-300"
                 >
                   Akses E-Library
@@ -452,31 +461,160 @@ export default function Literasi() {
               </div>
             </ScrollReveal>
 
-            {/* Right — book cover grid */}
+            {/* Right — 3 latest book cards from API */}
             <ScrollReveal direction="right">
-              <div className="grid grid-cols-3 grid-rows-2 gap-3">
-                {elibraryCovers.map((cover, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.08, duration: 0.5 }}
-                    className="overflow-hidden"
-                  >
-                    <img
-                      src={cover}
-                      alt={`E-Book ${i + 1}`}
-                      className="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-500"
-                      style={{
-                        boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
-                      }}
-                    />
-                  </motion.div>
-                ))}
+              <div className="grid grid-cols-3 gap-3">
+                {loading ? (
+                  Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="w-full aspect-[3/4] bg-[#1C1C1C]/10 rounded" />
+                      <div className="h-3 bg-[#1C1C1C]/10 rounded mt-2 w-3/4" />
+                      <div className="h-2 bg-[#1C1C1C]/10 rounded mt-1 w-1/2" />
+                    </div>
+                  ))
+                ) : books.length > 0 ? (
+                  books.slice(0, 3).map((book, i) => (
+                    <motion.div
+                      key={book.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.5 }}
+                      className="group cursor-pointer"
+                      onClick={() => setSelectedBook(book)}
+                    >
+                      <div className="overflow-hidden">
+                        <img
+                          src={book.coverImage || BOOK_COVER_PLACEHOLDER}
+                          alt={book.title}
+                          className="w-full aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-500"
+                          style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.2)' }}
+                        />
+                      </div>
+                      <h4 className="font-semibold text-[#1C1C1C] text-xs mt-2 line-clamp-2">{book.title}</h4>
+                      <p className="text-[#1C1C1C]/50 text-[10px] mt-0.5">{book.author}</p>
+                    </motion.div>
+                  ))
+                ) : (
+                  elibraryCovers.slice(0, 3).map((cover, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.08, duration: 0.5 }}
+                      className="overflow-hidden"
+                    >
+                      <img
+                        src={cover}
+                        alt={`E-Book ${i + 1}`}
+                        className="w-full aspect-[3/4] object-cover hover:scale-105 transition-transform duration-500"
+                        style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.2)' }}
+                      />
+                    </motion.div>
+                  ))
+                )}
               </div>
             </ScrollReveal>
           </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          Section 6.5 — KOLEKSI BUKU DIGITAL (background putih)
+          ═══════════════════════════════════════════════════════════════ */}
+      <section id="koleksi-buku" className="bg-white py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Header */}
+          <ScrollReveal>
+            <div className="mb-10">
+              <p className="text-lime text-xs font-semibold tracking-[3px] uppercase mb-4">
+                Perpustakaan Digital
+              </p>
+              <h2
+                className="font-bold text-[#1C1C1C]"
+                style={{
+                  fontSize: 'clamp(36px, 6vw, 72px)',
+                  letterSpacing: '-2px',
+                  lineHeight: '1.05',
+                }}
+              >
+                Koleksi Buku Digital
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-3 mb-10">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-5 py-2 text-sm font-medium transition-all duration-200 ${
+                  activeCategory === cat
+                    ? 'bg-[#1C1C1C] text-white'
+                    : 'border border-gray-300 text-gray-500 hover:border-[#1C1C1C] hover:text-[#1C1C1C]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Book Grid */}
+          {loading ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="w-full bg-gray-100" style={{ aspectRatio: '3/4' }} />
+                  <div className="h-3 bg-gray-100 rounded mt-3 w-1/3" />
+                  <div className="h-4 bg-gray-100 rounded mt-2 w-3/4" />
+                  <div className="h-3 bg-gray-100 rounded mt-1 w-1/2" />
+                  <div className="h-8 bg-gray-100 rounded mt-3" />
+                </div>
+              ))}
+            </div>
+          ) : filteredBooks.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {filteredBooks.map((book, i) => (
+                <ScrollReveal key={book.id} delay={i * 0.05}>
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.3 }}
+                    className="group cursor-pointer"
+                  >
+                    <div className="overflow-hidden mb-3" style={{ aspectRatio: '3/4' }}>
+                      <img
+                        src={book.coverImage || BOOK_COVER_PLACEHOLDER}
+                        alt={book.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.15)' }}
+                      />
+                    </div>
+                    <span className="inline-block text-xs font-semibold px-2 py-0.5 bg-lime text-[#1C1C1C]">
+                      {book.category}
+                    </span>
+                    <h3 className="font-semibold text-[#1C1C1C] text-sm mt-2 line-clamp-2">
+                      {book.title}
+                    </h3>
+                    <p className="text-gray-400 text-xs mt-1">{book.author}</p>
+                    <button
+                      onClick={() => setSelectedBook(book)}
+                      className="mt-3 w-full flex items-center justify-center gap-2 border border-[#1C1C1C] text-[#1C1C1C] text-xs font-medium py-2 hover:bg-[#1C1C1C] hover:text-white transition-all duration-300"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" /> Baca Sekarang
+                    </button>
+                  </motion.div>
+                </ScrollReveal>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <BookOpen className="w-16 h-16 text-gray-200 mx-auto mb-4" />
+              <p className="text-gray-400 text-lg">Belum ada buku tersedia</p>
+              <p className="text-gray-300 text-sm mt-1">Buku digital akan segera ditambahkan</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -528,6 +666,11 @@ export default function Literasi() {
           </motion.div>
         </div>
       </section>
+
+      {/* ─── Flipbook Reader Modal ─── */}
+      {selectedBook && (
+        <FlipbookReader book={selectedBook} onClose={() => setSelectedBook(null)} />
+      )}
     </>
   );
 }
