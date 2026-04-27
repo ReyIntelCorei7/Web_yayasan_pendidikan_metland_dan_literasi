@@ -59,23 +59,8 @@ export default function HeroSection() {
           delay={0.3}
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8"
-        >
-          <Link to="/programs">
-            <motion.span
-              className="inline-flex items-center gap-3 bg-lime text-charcoal px-6 py-4 rounded text-sm font-medium uppercase tracking-wider cursor-pointer"
-              whileHover={{ backgroundColor: '#94BC28' }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <motion.span whileHover={{ x: 6 }} className="inline-block">→</motion.span>
-              What We Do
-            </motion.span>
-          </Link>
-        </motion.div>
+    
+         
       </div>
 
       {/* Welcome Label */}
@@ -86,7 +71,7 @@ export default function HeroSection() {
         className="absolute bottom-10 left-8 flex items-center gap-3"
       >
         <div className="w-2 h-2 bg-white" />
-        <span className="text-sm text-white/70">Welcome</span>
+        <span className="text-sm text-white/70">Selamat Datang</span>
       </motion.div>
 
       {/* Scroll Indicator */}

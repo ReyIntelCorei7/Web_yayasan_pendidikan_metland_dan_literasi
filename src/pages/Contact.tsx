@@ -82,7 +82,7 @@ export default function Contact() {
               </div>
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02, backgroundColor: '#94BC28' }}
+                whileHover={{ scale: 1.02, backgroundColor: '#007A82' }}
                 whileTap={{ scale: 0.98 }}
                 className="bg-lime text-charcoal px-8 py-4 rounded-lg text-sm font-medium w-full sm:w-auto"
               >

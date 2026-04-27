@@ -18,10 +18,10 @@ const config: Config = {
     extend: {
       colors: {
         lime: {
-          DEFAULT: '#A8D52E',
-          hover: '#94BC28',
-          dark: '#65a30d',
-          light: '#D4EE96',
+          DEFAULT: '#008C95',
+          hover: '#007A82',
+          dark: '#006670',
+          light: '#B3DFE3',
         },
         charcoal: {
           DEFAULT: '#111111',

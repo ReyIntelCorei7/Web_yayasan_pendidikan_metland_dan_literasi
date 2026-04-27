@@ -44,7 +44,7 @@ export default function CTABanner() {
           <Link to="/contact">
             <motion.span
               className="inline-flex items-center gap-2 bg-lime text-charcoal px-8 py-4 rounded text-sm font-medium cursor-pointer"
-              whileHover={{ scale: 1.04, backgroundColor: '#94BC28' }}
+              whileHover={{ scale: 1.04, backgroundColor: '#007A82' }}
               whileTap={{ scale: 0.97 }}
             >
               Hubungi Kami <span>→</span>
@@ -53,7 +53,7 @@ export default function CTABanner() {
           <a href="#">
             <motion.span
               className="inline-flex items-center border border-white/30 text-white px-8 py-4 rounded text-sm font-medium cursor-pointer"
-              whileHover={{ borderColor: '#A8D52E', color: '#A8D52E' }}
+              whileHover={{ borderColor: '#008C95', color: '#008C95' }}
               whileTap={{ scale: 0.97 }}
             >
               Donate Now

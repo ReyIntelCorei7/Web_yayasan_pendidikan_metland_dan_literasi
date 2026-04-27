@@ -60,7 +60,7 @@ export default function ImpactSpotlight() {
           <Link to="/impact" className="inline-block mt-8">
             <motion.span
               className="inline-flex items-center gap-2 border border-white/20 text-white px-6 py-3 rounded text-sm font-medium cursor-pointer"
-              whileHover={{ backgroundColor: '#A8D52E', color: '#111', borderColor: 'rgba(168,213,46,1)' }}
+              whileHover={{ backgroundColor: '#008C95', color: '#fff', borderColor: 'rgba(0,140,149,1)' }}
               transition={{ duration: 0.25 }}
             >
               Read Full Story →

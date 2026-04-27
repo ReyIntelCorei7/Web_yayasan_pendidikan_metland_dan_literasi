@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --lime: #A8D52E;
+    --lime: #008C95;
     --charcoal: #111111;
     --transition-page: cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -18,12 +18,12 @@
   }
 
   ::selection {
-    background: #A8D52E;
+    background: #008C95;
     color: #111;
   }
 
   :focus-visible {
-    outline: 2px solid #A8D52E;
+    outline: 2px solid #008C95;
     outline-offset: 2px;
   }
 
